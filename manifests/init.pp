@@ -26,6 +26,7 @@ class pe_nc_backup (
   vcsrepo { $git_repo_dir:
     ensure   => present,
     provider => git,
+    user     => 'pe-puppet',
     require  => File[$path],
   }
 
