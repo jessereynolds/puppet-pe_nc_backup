@@ -1,0 +1,5 @@
+---
+rspec-puppet:
+  script: "bundle exec spec"
+
+
