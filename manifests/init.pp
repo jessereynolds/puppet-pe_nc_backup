@@ -13,11 +13,14 @@ class pe_nc_backup (
   $git_repo_dir = $pe_nc_backup::params::git_repo_dir
   $bin_dir      = $pe_nc_backup::params::bin_dir
 
-  file { $path:
-    ensure => directory,
+  File {
     owner  => 'pe-puppet',
     group  => 'pe-puppet',
-    mode   => '0755',
+    mode   => '0644',
+  }
+
+  file { $path:
+    ensure => directory,
   }
 
   vcsrepo { $git_repo_dir:
@@ -31,11 +34,13 @@ class pe_nc_backup (
     provider => puppet_gem,
   }
 
+  file { $bin_dir:
+    ensure => directory,
+  }
+
   file { 'pe_nc_backup script':
     ensure => file,
     path   => "${bin_dir}/pe_nc_backup",
-    owner  => 'pe-puppet',
-    group  => 'pe-puppet',
     mode   => '0755',
     source => 'puppet:///modules/pe_nc_backup/pe_nc_backup',
   }
