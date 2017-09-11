@@ -3,6 +3,6 @@ before_script:
   - "bundle install"
 
 rspec-puppet:
-  script: "bundle exec spec"
+  script: "bundle exec rake spec"
 
 
