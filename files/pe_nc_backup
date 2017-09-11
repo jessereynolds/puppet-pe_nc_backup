@@ -37,7 +37,7 @@ unless File.directory?(my_dir)
   raise "Directory does not exist at #{my_dir}"
 end
 
-logfile = File.join(my_dir, 'backup.log')
+logfile = File.join(my_dir, 'pe_nc_backup.log')
 logger  = Logger.new(logfile, 10, 1024000)
 log(logger, :info, "pe_nc_backup started at #{Time.now}")
 
