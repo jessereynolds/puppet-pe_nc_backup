@@ -25,9 +25,7 @@ If an ssh private key is present that provides authentication to a remote Git re
 
 ### Setup Requirements
 
-- ncio ruby gem
 - git
-- remote git repo
 
 ### Beginning with pe_nc_backup
 
