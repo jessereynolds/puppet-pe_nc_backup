@@ -1,0 +1,8 @@
+fixtures:
+  forge_modules:
+    stdlib:
+      repo: "puppetlabs/stdlib"
+      ref: "4.13.1"
+    vcsrepo:
+      repo: "puppetlabs/vcsrepo"
+      ref: "2.0.0"
