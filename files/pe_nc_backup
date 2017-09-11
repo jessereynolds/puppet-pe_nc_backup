@@ -77,7 +77,7 @@ if system('git status --porcelain')
     failures += 1
   end
 
-  if `git status --porcelain #{thefile}` =~ /^\s*M/
+  if `git status --porcelain #{thefile}` =~ /^\s*[AM]/
     hostname  = `hostname -f`
     unless system("git commit -m 'Update node groups by pe_nc_backup on #{hostname} at #{timestamp}'")
       logger.error "Unable to make git commit: #{$?}"
