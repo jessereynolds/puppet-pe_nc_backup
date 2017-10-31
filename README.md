@@ -1,7 +1,7 @@
 
 # pe_nc_backup
 
-[![pipeline status](https://gitlab.com/jessereynolds/puppet-pe_nc_backup/badges/master/pipeline.svg)](https://gitlab.com/jessereynolds/puppet-pe_nc_backup/commits/master)
+[![build status](https://travis-ci.org/jessereynolds/puppet-pe_nc_backup.svg?branch=master)](https://travis-ci.org/jessereynolds/puppet-pe_nc_backup)
 
 #### Table of Contents
 
