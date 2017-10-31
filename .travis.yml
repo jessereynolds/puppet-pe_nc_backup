@@ -11,7 +11,7 @@ before_install:
   - gem --version
   - bundle -v
 script:
-  - 'bundle exec rake $CHECK'
+  - 'bundle exec rake release_checks'
 matrix:
   fast_finish: true
   include:
