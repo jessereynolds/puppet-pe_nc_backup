@@ -29,7 +29,7 @@ notifications:
   email: false
 deploy:
   provider: puppetforge
-  user: puppet
+  user: jesse
   password:
     secure: ""
   on:
