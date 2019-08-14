@@ -61,3 +61,17 @@ Contributions welcome!
 - make a PR from a feature branch
 - include tests if you can
 
+## Release
+
+```
+git commit
+git tag x.y.z
+git push --tags
+```
+
+Look for the status of the build of the tag, not of the master branch, on the [travis build page](https://travis-ci.org/jessereynolds/puppet-pe_nc_backup/builds)
+
+Look for the new version on the [Forge page](https://forge.puppet.com/jesse/pe_nc_backup)
+
+Build and deploy takes a couple of minutes.
+
