@@ -29,8 +29,8 @@ failures = 0
 thefile  = 'node_groups.json'
 
 unless my_dir && my_dir != ''
-  puts "No backup directory specified, using /pe_nc_backup"
-  my_dir = '/pe_nc_backup'
+  puts "No backup directory specified, using /opt/pe_nc_backup"
+  my_dir = '/opt/pe_nc_backup'
 end
 
 unless File.directory?(my_dir)
