@@ -11,6 +11,7 @@
 require 'logger'
 require 'open3'
 require 'time'
+require 'english'
 
 def log(logger, severity, message)
   puts "#{severity.to_s.upcase} - #{message}"
@@ -29,7 +30,7 @@ failures = 0
 thefile  = 'node_groups.json'
 
 unless my_dir && my_dir != ''
-  puts "No backup directory specified, using /pe_nc_backup"
+  puts 'No backup directory specified, using /pe_nc_backup'
   my_dir = '/pe_nc_backup'
 end
 
@@ -38,7 +39,7 @@ unless File.directory?(my_dir)
 end
 
 logfile = File.join(my_dir, 'pe_nc_backup.log')
-logger  = Logger.new(logfile, 10, 1024000)
+logger  = Logger.new(logfile, 10, 1_024_000)
 log(logger, :info, "pe_nc_backup started at #{Time.now}")
 
 repo_dir = File.join(my_dir, 'repo')
@@ -47,17 +48,17 @@ unless File.directory?(repo_dir)
   Dir.mkdir(repo_dir)
 end
 
-timestamp = Time.now().iso8601
+timestamp = Time.now.iso8601
 cmd       = "/opt/puppetlabs/puppet/bin/ncio backup > #{repo_dir}/#{thefile}"
 
-Open3.popen2e(cmd) do |stdin, stdout_err, wait_thr|
+Open3.popen2e(cmd) do |_stdin, stdout_err, wait_thr|
   while line = stdout_err.gets
     log(logger, :info, line)
   end
 
   exit_status = wait_thr.value
   if exit_status.success?
-    log(logger, :info, "Node groups backed up successfully.")
+    log(logger, :info, 'Node groups backed up successfully.')
   else
     log(logger, :error, "Node groups backup has failed! ncio: #{exit_status}.")
     failures += 1
@@ -73,14 +74,14 @@ if system('git status --porcelain')
   # TODO: if the origin remote exists, try a pull from it (errors are non-fatal)
 
   unless system("git add #{thefile}")
-    logger.error "Unable to git add #{thefile}: #{$?}"
+    logger.error "Unable to git add #{thefile}: #{$CHILD_STATUS}"
     failures += 1
   end
 
-  if `git status --porcelain #{thefile}` =~ /^\s*[AM]/
+  if `git status --porcelain #{thefile}` =~ %r{^\s*[AM]}
     hostname  = `hostname -f`
     unless system("git commit -m 'Update node groups by pe_nc_backup on #{hostname} at #{timestamp}'")
-      logger.error "Unable to make git commit: #{$?}"
+      logger.error "Unable to make git commit: #{$CHILD_STATUS}"
     end
   end
 
@@ -97,4 +98,3 @@ if failures > 0
   logger.error "Errors (#{failures}) were encountered backing up Puppet Enterprise"
   exit 1
 end
-
