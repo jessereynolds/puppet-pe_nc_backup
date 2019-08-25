@@ -1,31 +1,45 @@
 ---
-sudo: false
-dist: trusty
+dist: xenial
 language: ruby
 cache: bundler
 before_install:
   - bundle -v
-  - rm Gemfile.lock || true
-  - gem update --system
-  - gem update bundler
+  - rm -f Gemfile.lock
+  - gem update --system $RUBYGEMS_VERSION
   - gem --version
   - bundle -v
 script:
-  - 'bundle exec rake release_checks'
+  - 'bundle exec rake $CHECK'
+bundler_args: --without system_tests
+rvm:
+  - 2.5.3
+stages:
+  - static
+  - spec
+  - acceptance
+  -
+    if: tag =~ ^v\d
+    name: deploy
 matrix:
   fast_finish: true
   include:
-    - rvm: 2.3.1
-      bundler_args: --without system_tests
-      env: PUPPET_GEM_VERSION="~> 4.0"
+    -
+      env: CHECK="check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop syntax lint metadata_lint"
+      stage: static
+    -
+      env: PUPPET_GEM_VERSION="~> 5.0" CHECK=parallel_spec
+      rvm: 2.4.5
+      stage: spec
+    -
+      env: PUPPET_GEM_VERSION="~> 6.0" CHECK=parallel_spec
+      rvm: 2.5.3
+      stage: spec
+    -
+      env: DEPLOY_TO_FORGE=yes
+      stage: deploy
+branches:
+  only:
+    - master
+    - /^v\d/
 notifications:
   email: false
-deploy:
-  provider: puppetforge
-  user: jesse
-  password:
-    secure: "ZT4yK2M9UA5yS9nEn1J5ZMzNM2aR3CAcLDctqa7/sI57ZmE9FEAqRXnCBp3vu/0DxYGROvj36xXW5tGOrXq9LtdWBrrr5N0eVMusXsJMyYMr6GUgOUq3pV4557S51CW8fzFV80Mo9O+z7INhPHlOO7apObcmlIYfJdcEYxF6o70LFjNJG2wh3c33E7+1Qwgb1LiC2m5d3mMfl+UGCyUQBFsQYeqKGWrVvkSJRcbntuznWUUXQ8zomntm/IbdEIk0GbJTjkFcG/DLHRTtMjBGvihhBQIeIlsEFbbRhmUmY5qrf+yYKyEgLrsrTtyjRSHYvHkDBIMCHgHTm4Hl4BXLVuoRRIQkkGocrI/r7po6FzGo/TfsEhw7VijhnICGfqj1WqSGiggXJbrrm1Cdi35aChd1EHWLB6FEtGIY6EA9EWxM0OBtqau7Divl8iCxoxa/oHzpVDz9DJDigY80ASwcd3UAS30TYee8BzGuMI/7LaQjr824jkQDCrX5idMnYeEQPR3Jh4BQVGqfwv06wZ4X5grl/Xjj8kTjKjUsafc9Uhm+UwpAulfAlzY6Th9Vqu1servXJwEaAJC+a1T1wygkBFagjFqMfy/jWhxtHnICb+vHamPE24VngPePW2H4asqINLK28AMPOFUodR3aDuPz6o42Dt17OHhlRuhCsWHFzGM="
-  on:
-    tags: true
-    all_branches: true
-    condition: "$DEPLOY_TO_FORGE = yes"
