@@ -52,9 +52,11 @@ timestamp = Time.now.iso8601
 cmd       = "/opt/puppetlabs/puppet/bin/ncio backup > #{repo_dir}/#{thefile}"
 
 Open3.popen2e(cmd) do |_stdin, stdout_err, wait_thr|
+  # rubocop:disable Lint/AssignmentInCondition
   while line = stdout_err.gets
     log(logger, :info, line)
   end
+  # rubocop:enable Lint/AssignmentInCondition
 
   exit_status = wait_thr.value
   if exit_status.success?
