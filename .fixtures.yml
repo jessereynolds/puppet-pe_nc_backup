@@ -6,3 +6,6 @@ fixtures:
     vcsrepo:
       repo: "puppetlabs/vcsrepo"
       ref: "2.0.0"
+    cron_core:
+      repo: "puppetlabs/cron_core"
+      ref: "1.0.2"
