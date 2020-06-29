@@ -83,7 +83,7 @@ end
 Dir.chdir(repo_dir)
 
 if system('git status --porcelain')
-  if failures == 0
+  if failures.zero?
 
     # TODO: if the origin remote exists, try a pull from it (errors are non-fatal)
 
@@ -102,12 +102,10 @@ if system('git status --porcelain')
   # TODO: if there is an origin remote, try pushing to it
 
   else
-    
-    log(logger, :error, "Failures encounted backing up node groups so git commit is being skipped.")
+    log(logger, :error, 'Failures encounted backing up node groups so git commit is being skipped.')
     failures += 1
   end
 else
-  
   log(logger, :error, "This does not appear to be a git repo here at #{Dir.pwd}")
   failures += 1
 end
