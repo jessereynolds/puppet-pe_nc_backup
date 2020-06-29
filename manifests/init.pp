@@ -14,9 +14,9 @@ class pe_nc_backup (
   $bin_dir      = $pe_nc_backup::params::bin_dir
 
   File {
-    owner  => 'pe-puppet',
-    group  => 'pe-puppet',
-    mode   => '0644',
+    owner => 'pe-puppet',
+    group => 'pe-puppet',
+    mode  => '0644',
   }
 
   file { $path:

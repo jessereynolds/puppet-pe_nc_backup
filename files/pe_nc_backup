@@ -11,7 +11,6 @@
 require 'logger'
 require 'open3'
 require 'time'
-require 'english'
 
 def log(logger, severity, message)
   puts "#{severity.to_s.upcase} - #{message}"
@@ -25,7 +24,11 @@ def log(logger, severity, message)
   end
 end
 
+puppet_bindir = '/opt/puppetlabs/puppet/bin'
+ssldir        = `#{puppet_bindir}/puppet config print ssldir`.chomp
+
 my_dir   = ARGV[0]
+certname = ARGV[1] || `#{puppet_bindir}/puppet config print certname`.chomp
 failures = 0
 thefile  = 'node_groups.json'
 
@@ -49,7 +52,15 @@ unless File.directory?(repo_dir)
 end
 
 timestamp = Time.now.iso8601
-cmd       = "/opt/puppetlabs/puppet/bin/ncio backup > #{repo_dir}/#{thefile}"
+
+log(logger, :info, "determined certname to be: #{certname}")
+
+cmd = "#{puppet_bindir}/ncio --uri 'https://#{certname}:4433/classifier-api/v1' "
+cmd += "--cert '#{ssldir}/certs/#{certname}.pem' "
+cmd += "--key '#{ssldir}/private_keys/#{certname}.pem' "
+cmd += "backup > '#{repo_dir}/#{thefile}'"
+
+log(logger, :info, "Running command: [#{cmd}]")
 
 Open3.popen2e(cmd) do |_stdin, stdout_err, wait_thr|
   # rubocop:disable Lint/AssignmentInCondition
@@ -72,25 +83,29 @@ end
 Dir.chdir(repo_dir)
 
 if system('git status --porcelain')
+  if failures.zero?
 
-  # TODO: if the origin remote exists, try a pull from it (errors are non-fatal)
+    # TODO: if the origin remote exists, try a pull from it (errors are non-fatal)
 
-  unless system("git add #{thefile}")
-    logger.error "Unable to git add #{thefile}: #{$CHILD_STATUS}"
-    failures += 1
-  end
-
-  if `git status --porcelain #{thefile}` =~ %r{^\s*[AM]}
-    hostname  = `hostname -f`
-    unless system("git commit -m 'Update node groups by pe_nc_backup on #{hostname} at #{timestamp}'")
-      logger.error "Unable to make git commit: #{$CHILD_STATUS}"
+    unless system("git add #{thefile}")
+      logger.error "Unable to git add #{thefile}: #{$CHILD_STATUS}"
+      failures += 1
     end
-  end
+
+    if `git status --porcelain #{thefile}` =~ %r{^\s*[AM]}
+      unless system("git commit -m 'Update node groups by pe_nc_backup on #{certname} at #{timestamp}'")
+        logger.error "Unable to make git commit: #{$CHILD_STATUS}"
+        failures += 1
+      end
+    end
 
   # TODO: if there is an origin remote, try pushing to it
 
+  else
+    log(logger, :error, 'Failures encounted backing up node groups so git commit is being skipped.')
+    failures += 1
+  end
 else
-
   log(logger, :error, "This does not appear to be a git repo here at #{Dir.pwd}")
   failures += 1
 end
