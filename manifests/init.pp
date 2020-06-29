@@ -48,7 +48,7 @@ class pe_nc_backup (
 
   # sudo -H -u pe-puppet /opt/puppetlabs/puppet/bin/ncio backup > /var/tmp/backup.json
   cron { 'pe_nc_backup':
-    command => "${bin_dir}/pe_nc_backup ${path} --certname ${trusted['certname']}",
+    command => "${bin_dir}/pe_nc_backup ${path}",
     user    => 'pe-puppet',
     hour    => '*',
     minute  => '*/5',
