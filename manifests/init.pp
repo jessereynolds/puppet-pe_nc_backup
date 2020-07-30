@@ -41,12 +41,10 @@ class pe_nc_backup (
   }
 
   file { 'pe_nc_backup script':
-    ensure => file,
-    path   => "${bin_dir}/pe_nc_backup",
-    mode   => '0755',
-    source => epp('pe_nc_backup/pe_nc_backup.epp', {
-      ssl_dir => $ssl_dir,
-    })
+    ensure  => file,
+    path    => "${bin_dir}/pe_nc_backup",
+    mode    => '0755',
+    content => epp('pe_nc_backup/pe_nc_backup.epp', { ssl_dir => $ssl_dir })
   }
 
   # sudo -H -u pe-puppet /opt/puppetlabs/puppet/bin/ncio backup > /var/tmp/backup.json
