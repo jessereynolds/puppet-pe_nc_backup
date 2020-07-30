@@ -8,7 +8,7 @@
 #   include pe_nc_backup
 class pe_nc_backup (
   String $path = $pe_nc_backup::params::path,
-  String $ssl_dir = $pe_nc_backups::params::ssl_dir,
+  String $ssl_dir = $pe_nc_backup::params::ssl_dir,
 ) inherits pe_nc_backup::params {
 
   $git_repo_dir = $pe_nc_backup::params::git_repo_dir
