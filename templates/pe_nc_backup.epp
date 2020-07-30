@@ -25,7 +25,7 @@ def log(logger, severity, message)
 end
 
 puppet_bindir = '/opt/puppetlabs/puppet/bin'
-ssldir        = '<%= $ssl_dir -%>'
+ssldir        = '<% $ssl_dir -%>'
 
 my_dir   = ARGV[0]
 certname = ARGV[1] || `#{puppet_bindir}/puppet config print certname`.chomp
