@@ -8,15 +8,16 @@
 #   include pe_nc_backup
 class pe_nc_backup (
   String $path = $pe_nc_backup::params::path,
+  String $ssl_dir = $pe_nc_backups::params::ssl_dir,
 ) inherits pe_nc_backup::params {
 
   $git_repo_dir = $pe_nc_backup::params::git_repo_dir
   $bin_dir      = $pe_nc_backup::params::bin_dir
 
   File {
-    owner => 'pe-puppet',
-    group => 'pe-puppet',
-    mode  => '0644',
+    owner  => 'pe-puppet',
+    group  => 'pe-puppet',
+    mode   => '0644',
   }
 
   file { $path:
@@ -43,7 +44,9 @@ class pe_nc_backup (
     ensure => file,
     path   => "${bin_dir}/pe_nc_backup",
     mode   => '0755',
-    source => 'puppet:///modules/pe_nc_backup/pe_nc_backup',
+    source => epp("${module_name}/pe_nc_backup.epp", {
+      ssl_dir => $ssl_dir,
+    })
   }
 
   # sudo -H -u pe-puppet /opt/puppetlabs/puppet/bin/ncio backup > /var/tmp/backup.json
