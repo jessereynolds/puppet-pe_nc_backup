@@ -47,7 +47,7 @@ Class: `pe_nc_backups`
 Parameters:
 
 - `path` - path to directory to store the backup git repo, backup script, and log file. Default: `/opt/pe_nc_backup/`. The parent directory must already exist.
-- `ssl_dir` - The path to the Puppet Agent's ssl directory on the master. Default: `/etc/puppetlabs/puppet/ssl`. The parent directory must already exist.
+- `ssl_dir` - The path to the Puppet Agent's ssl directory on the master. Default: `/etc/puppetlabs/puppet/ssl`.
 
 ## Limitations
 
