@@ -1,18 +1,17 @@
-
 # pe_nc_backup
 
-[![build status](https://travis-ci.org/jessereynolds/puppet-pe_nc_backup.svg?branch=master)](https://travis-ci.org/jessereynolds/puppet-pe_nc_backup)
+[![build status](https://travis-ci.org/jessereynolds/puppet-pe_nc_backup.svg?branch=main)](https://travis-ci.org/jessereynolds/puppet-pe_nc_backup)
 
 #### Table of Contents
 
 1. [Description](#description)
-2. [Setup - The basics of getting started with pe_nc_backup](#setup)
+2. [Setup](#setup)
     * [Setup requirements](#setup-requirements)
     * [Beginning with pe_nc_backup](#beginning-with-pe_nc_backup)
-3. [Usage - Configuration options and additional functionality](#usage)
-4. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
-5. [Limitations - OS compatibility, etc.](#limitations)
-6. [Development - Guide for contributing to the module](#development)
+3. [Usage](#usage)
+4. [Reference](#reference)
+5. [Limitations](#limitations)
+6. [Development](#development)
 
 ## Description
 
@@ -25,18 +24,18 @@ If an ssh private key is present that provides authentication to a remote Git re
 
 ### Setup Requirements
 
-- git
+- git must be installed on the master running pe_nc_backup
 
 ### Beginning with pe_nc_backup
 
 ```
-include ::pe_nc_backup
+include pe_nc_backup
 ```
 
 ## Usage
 
 ```
-class { '::pe_nc_backup':
+class { 'pe_nc_backup':
   path => '/opt/pe_nc_backup',
 }
 ```
@@ -48,10 +47,11 @@ Class: `pe_nc_backups`
 Parameters:
 
 - `path` - path to directory to store the backup git repo, backup script, and log file. Default: `/opt/pe_nc_backup/`. The parent directory must already exist.
+- `ssl_dir` - The path to the Puppet Agent's ssl directory on the master. Default: `/etc/puppetlabs/puppet/ssl`. The parent directory must already exist.
 
 ## Limitations
 
-Tested on PE 2017.2.3 but should work with all recent versions of PE.
+Currently tested on PE 2019.8.1
 
 ## Development
 
@@ -61,6 +61,13 @@ Contributions welcome!
 - make a PR from a feature branch
 - include tests if you can
 
+Executing the tests:
+
+```
+pdk validate
+pdk test unit
+```
+
 ## Release
 
 ```
@@ -69,7 +76,7 @@ git tag x.y.z
 git push --tags
 ```
 
-Look for the status of the build of the tag, not of the master branch, on the [travis build page](https://travis-ci.org/jessereynolds/puppet-pe_nc_backup/builds)
+Look for the status of the build of the tag, not of the main branch, on the [travis build page](https://travis-ci.org/jessereynolds/puppet-pe_nc_backup/builds)
 
 Look for the new version on the [Forge page](https://forge.puppet.com/jesse/pe_nc_backup)
 
