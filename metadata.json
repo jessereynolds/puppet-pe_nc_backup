@@ -1,6 +1,6 @@
 {
   "name": "jesse-pe_nc_backup",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Jesse Reynolds",
   "summary": "Creates backups of Puppet Enterprise's Node Classifier as json in a local git repo.",
   "license": "Apache-2.0",
@@ -37,7 +37,7 @@
       "version_requirement": ">= 4.7.0 < 7.0.0"
     }
   ],
-  "pdk-version": "1.17.0",
-  "template-url": "pdk-default#1.17.0",
-  "template-ref": "tags/1.17.0-0-gd3a4319"
+  "pdk-version": "1.18.1",
+  "template-url": "pdk-default#1.18.1",
+  "template-ref": "tags/1.18.1-0-g3d2e75c"
 }

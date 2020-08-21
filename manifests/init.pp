@@ -7,12 +7,12 @@
 # @example
 #   include pe_nc_backup
 class pe_nc_backup (
-  String $path = $pe_nc_backup::params::path,
-  String $ssl_dir = $pe_nc_backup::params::ssl_dir,
-) inherits pe_nc_backup::params {
+  String $path    = '/opt/pe_nc_backup',
+  String $ssl_dir = '/etc/puppetlabs/puppet/ssl',
+) {
 
-  $git_repo_dir = $pe_nc_backup::params::git_repo_dir
-  $bin_dir      = $pe_nc_backup::params::bin_dir
+  $git_repo_dir = "${path}/repo"
+  $bin_dir      = "${path}/bin"
 
   File {
     owner  => 'pe-puppet',
