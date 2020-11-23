@@ -7,8 +7,10 @@
 # @example
 #   include pe_nc_backup
 class pe_nc_backup (
-  String $path    = '/opt/pe_nc_backup',
-  String $ssl_dir = '/etc/puppetlabs/puppet/ssl',
+  String                                          $path       = '/opt/pe_nc_backup',
+  String                                          $ssl_dir    = '/etc/puppetlabs/puppet/ssl',
+  Enum['debug', 'info', 'warn', 'error', 'fatal'] $log_level  = 'error',
+  Boolean                                         $stdout_log = true,
 ) {
 
   $git_repo_dir = "${path}/repo"
@@ -44,7 +46,11 @@ class pe_nc_backup (
     ensure  => file,
     path    => "${bin_dir}/pe_nc_backup",
     mode    => '0755',
-    content => epp('pe_nc_backup/pe_nc_backup.epp', { ssl_dir => $ssl_dir })
+    content => epp('pe_nc_backup/pe_nc_backup.epp', {
+      ssl_dir    => $ssl_dir,
+      log_level  => $log_level,
+      stdout_log => $stdout_log,
+    })
   }
 
   # sudo -H -u pe-puppet /opt/puppetlabs/puppet/bin/ncio backup > /var/tmp/backup.json
