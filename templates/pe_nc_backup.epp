@@ -31,7 +31,7 @@ ssldir        = '<%= $ssl_dir -%>'
 my_dir     = ARGV[0]
 certname   = ARGV[1] || `#{puppet_bindir}/puppet config print certname`.chomp
 log_level  = ARGV[2] || '<%= $log_level %>'
-stdout_log = (ARGV[3] == 'stdout_log') || <%= $stdout_log %>
+stdout_log = <%= $stdout_log %>
 failures  = 0
 thefile   = 'node_groups.json'
 
@@ -92,7 +92,7 @@ end
 
 Dir.chdir(repo_dir)
 
-if system('git status --porcelain')
+if system('git status --porcelain > /dev/null')
   if failures.zero?
 
     # TODO: if the origin remote exists, try a pull from it (errors are non-fatal)
@@ -103,7 +103,7 @@ if system('git status --porcelain')
     end
 
     if `git status --porcelain #{thefile}` =~ %r{^\s*[AM]}
-      unless system("git commit -m 'Update node groups by pe_nc_backup on #{certname} at #{timestamp}'")
+      unless system("git commit --quiet -m 'Update node groups by pe_nc_backup on #{certname} at #{timestamp}'")
         logger.error "Unable to make git commit: #{$CHILD_STATUS}"
         failures += 1
       end
