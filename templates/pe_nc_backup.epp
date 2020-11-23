@@ -51,7 +51,7 @@ logger.level = log_level
 logger_stdout = Logger.new(STDOUT)
 logger_stdout.level = log_level
 loggers = [logger]
-loggers += logger_stdout if stdout_log
+loggers << logger_stdout if stdout_log
 
 log(loggers, :info, "pe_nc_backup started at #{Time.now}")
 
