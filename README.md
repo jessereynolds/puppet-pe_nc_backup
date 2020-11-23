@@ -48,6 +48,9 @@ Parameters:
 
 - `path` - path to directory to store the backup git repo, backup script, and log file. Default: `/opt/pe_nc_backup/`. The parent directory must already exist.
 - `ssl_dir` - The path to the Puppet Agent's ssl directory on the master. Default: `/etc/puppetlabs/puppet/ssl`.
+- `log_level` - The verbosity of the Ruby logger writing to the log file. Possible values: 'debug', 'info', 'warn', 'error', 'fatal'. Default: `info`.
+- `log_level_stdout` - The verbosity of the Ruby logger writing to STDOUT. Possible values: 'debug', 'info', 'warn', 'error', 'fatal'. Default: `error`.
+- `stdout_log` - Whether to enable the STDOUT logger. Default: true (Boolean)
 
 ## Limitations
 
