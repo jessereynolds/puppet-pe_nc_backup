@@ -50,7 +50,9 @@ Parameters:
 - `ssl_dir` - The path to the Puppet Agent's ssl directory on the master. Default: `/etc/puppetlabs/puppet/ssl`.
 - `log_level` - The verbosity of the Ruby logger writing to the log file. Possible values: 'debug', 'info', 'warn', 'error', 'fatal'. Default: `info`.
 - `log_level_stdout` - The verbosity of the Ruby logger writing to STDOUT. Possible values: 'debug', 'info', 'warn', 'error', 'fatal'. Default: `error`.
-- `stdout_log` - Whether to enable the STDOUT logger. Default: true (Boolean)
+- `stdout_log` - Whether to enable the STDOUT logger. Boolean. Default: true
+- `cron_hour` - The hour for the cron job. String. Default: `*`
+- `cron_minute` - The minute for the cron job. String. Default: `*/5` (every 5 minutes)
 
 ## Limitations
 
