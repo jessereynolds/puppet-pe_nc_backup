@@ -9,8 +9,8 @@
 class pe_nc_backup (
   String                                          $path             = '/opt/pe_nc_backup',
   String                                          $ssl_dir          = '/etc/puppetlabs/puppet/ssl',
-  Enum['debug', 'info', 'warn', 'error', 'fatal'] $log_level        = 'error',
-  Enum['debug', 'info', 'warn', 'error', 'fatal'] $log_level_stdout = 'info',
+  Enum['debug', 'info', 'warn', 'error', 'fatal'] $log_level        = 'info',
+  Enum['debug', 'info', 'warn', 'error', 'fatal'] $log_level_stdout = 'error',
   Boolean                                         $stdout_log       = true,
 ) {
 
