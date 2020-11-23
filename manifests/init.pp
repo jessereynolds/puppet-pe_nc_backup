@@ -7,10 +7,11 @@
 # @example
 #   include pe_nc_backup
 class pe_nc_backup (
-  String                                          $path       = '/opt/pe_nc_backup',
-  String                                          $ssl_dir    = '/etc/puppetlabs/puppet/ssl',
-  Enum['debug', 'info', 'warn', 'error', 'fatal'] $log_level  = 'error',
-  Boolean                                         $stdout_log = true,
+  String                                          $path             = '/opt/pe_nc_backup',
+  String                                          $ssl_dir          = '/etc/puppetlabs/puppet/ssl',
+  Enum['debug', 'info', 'warn', 'error', 'fatal'] $log_level        = 'error',
+  Enum['debug', 'info', 'warn', 'error', 'fatal'] $log_level_stdout = 'info',
+  Boolean                                         $stdout_log       = true,
 ) {
 
   $git_repo_dir = "${path}/repo"
@@ -47,9 +48,10 @@ class pe_nc_backup (
     path    => "${bin_dir}/pe_nc_backup",
     mode    => '0755',
     content => epp('pe_nc_backup/pe_nc_backup.epp', {
-      ssl_dir    => $ssl_dir,
-      log_level  => $log_level,
-      stdout_log => $stdout_log,
+      ssl_dir          => $ssl_dir,
+      log_level        => $log_level,
+      log_level_stdout => $log_level_stdout,
+      stdout_log       => $stdout_log,
     })
   }
 

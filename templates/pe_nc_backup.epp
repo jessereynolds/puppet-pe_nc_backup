@@ -28,10 +28,13 @@ end
 puppet_bindir = '/opt/puppetlabs/puppet/bin'
 ssldir        = '<%= $ssl_dir -%>'
 
-my_dir     = ARGV[0]
-certname   = ARGV[1] || `#{puppet_bindir}/puppet config print certname`.chomp
-log_level  = ARGV[2] || '<%= $log_level %>'
-stdout_log = <%= $stdout_log %>
+my_dir   = ARGV[0]
+certname = ARGV[1] || `#{puppet_bindir}/puppet config print certname`.chomp
+
+log_level        = '<%= $log_level %>'
+log_level_stdout = '<%= $log_level_stdout %>'
+stdout_log       = <%= $stdout_log %>
+
 failures  = 0
 thefile   = 'node_groups.json'
 
@@ -49,7 +52,7 @@ logger = Logger.new(logfile, 10, 1_024_000)
 logger.level = log_level
 
 logger_stdout = Logger.new(STDOUT)
-logger_stdout.level = log_level
+logger_stdout.level = log_level_stdout
 loggers = [logger]
 loggers << logger_stdout if stdout_log
 
