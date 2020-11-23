@@ -12,6 +12,8 @@ class pe_nc_backup (
   Enum['debug', 'info', 'warn', 'error', 'fatal'] $log_level        = 'info',
   Enum['debug', 'info', 'warn', 'error', 'fatal'] $log_level_stdout = 'error',
   Boolean                                         $stdout_log       = true,
+  String                                          $cron_hour        = '*',
+  String                                          $cron_minute      = '*/5',
 ) {
 
   $git_repo_dir = "${path}/repo"
@@ -59,8 +61,8 @@ class pe_nc_backup (
   cron { 'pe_nc_backup':
     command => "${bin_dir}/pe_nc_backup ${path}",
     user    => 'pe-puppet',
-    hour    => '*',
-    minute  => '*/5',
+    hour    => $cron_hour,
+    minute  => $cron_minute,
     require => [ File['pe_nc_backup script'], Package['ncio'], Vcsrepo[$git_repo_dir], ],
   }
 
