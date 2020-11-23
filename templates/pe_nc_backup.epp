@@ -65,9 +65,22 @@ timestamp = Time.now.iso8601
 
 log(loggers, :info, "determined certname to be: #{certname}")
 
+agent_cert = "#{ssldir}/certs/#{certname}.pem"
+agent_key = "#{ssldir}/private_keys/#{certname}.pem"
+
+unless File.file?(agent_cert)
+  log(loggers, :error, "certificate file not found at #{agent_cert}")
+  exit 1
+end
+
+unless File.file?(agent_key)
+  log(loggers, :error, "key file not found at #{agent_key}")
+  exit 1
+end
+
 cmd = "#{puppet_bindir}/ncio --uri 'https://#{certname}:4433/classifier-api/v1' "
-cmd += "--cert '#{ssldir}/certs/#{certname}.pem' "
-cmd += "--key '#{ssldir}/private_keys/#{certname}.pem' "
+cmd += "--cert '#{agent_cert}' "
+cmd += "--key '#{agent_key}' "
 cmd += "backup > '#{repo_dir}/#{thefile}'"
 
 log(loggers, :info, "Running command: [#{cmd}]")
