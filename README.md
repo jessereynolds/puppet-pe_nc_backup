@@ -21,10 +21,9 @@ If an ssh private key is present that provides authentication to a remote Git re
 
 ## Setup
 
-
 ### Setup Requirements
 
-- git must be installed on the master running pe_nc_backup
+- git must be installed on the PE primary server running `pe_nc_backup`
 
 ### Beginning with pe_nc_backup
 
@@ -40,23 +39,11 @@ class { 'pe_nc_backup':
 }
 ```
 
-## Reference
-
-Class: `pe_nc_backups`
-
-Parameters:
-
-- `path` - path to directory to store the backup git repo, backup script, and log file. Default: `/opt/pe_nc_backup/`. The parent directory must already exist.
-- `ssl_dir` - The path to the Puppet Agent's ssl directory on the master. Default: `/etc/puppetlabs/puppet/ssl`.
-- `log_level` - The verbosity of the Ruby logger writing to the log file. Possible values: 'debug', 'info', 'warn', 'error', 'fatal'. Default: `info`.
-- `log_level_stdout` - The verbosity of the Ruby logger writing to STDOUT. Possible values: 'debug', 'info', 'warn', 'error', 'fatal'. Default: `error`.
-- `stdout_log` - Whether to enable the STDOUT logger. Boolean. Default: true
-- `cron_hour` - The hour for the cron job. String. Default: `*`
-- `cron_minute` - The minute for the cron job. String. Default: `*/5` (every 5 minutes)
-
 ## Limitations
 
-Currently tested on PE 2019.8.1
+Currently tested on PE 2019.8.z, PE 2021.7.z, PE 2023.2
+
+PE 2019.8.z (Puppet 6) is not compatible / fails catalog compilation with puppetlabs-vcsrepo 6.0.0 and later due to removal of Puppet 6 support.
 
 ## Development
 
