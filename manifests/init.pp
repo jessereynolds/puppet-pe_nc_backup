@@ -35,21 +35,21 @@ class pe_nc_backup (
       owner => 'pe-puppet',
       group => 'pe-puppet',
       mode  => '0644',
-    ;
+      ;
     [$path, $bin_dir]:
       ensure => directory,
-    ;
+      ;
     'pe_nc_backup script':
       ensure  => file,
       path    => "${bin_dir}/pe_nc_backup",
       mode    => '0755',
       content => epp('pe_nc_backup/pe_nc_backup.epp', {
-        ssl_dir          => $ssl_dir,
-        log_level        => $log_level,
-        log_level_stdout => $log_level_stdout,
-        stdout_log       => $stdout_log,
+          ssl_dir          => $ssl_dir,
+          log_level        => $log_level,
+          log_level_stdout => $log_level_stdout,
+          stdout_log       => $stdout_log,
       })
-    ;
+      ;
   }
 
   vcsrepo { $git_repo_dir:
