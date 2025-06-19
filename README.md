@@ -41,9 +41,7 @@ class { 'pe_nc_backup':
 
 ## Limitations
 
-Currently tested on PE 2019.8.z, PE 2021.7.z, PE 2023.2
-
-PE 2019.8.z (Puppet 6) is not compatible / fails catalog compilation with puppetlabs-vcsrepo 6.0.0 and later due to removal of Puppet 6 support.
+Tested on PE 2019.8.z, PE 2021.7.z, PE 2023.2
 
 ## Development
 
